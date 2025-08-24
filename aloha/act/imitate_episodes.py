@@ -385,12 +385,12 @@ def label_entropy(config, ckpt_name, save_demos=False,save_episode=True):
         std = np.std(actions_entropy_norm)
         mean = np.mean(actions_entropy_norm)
         plt.figure(figsize=(10, 6))
-        plt.plot(indices, actions_entropy_norm, marker='o')  # 使用点标记每个数据点
+        plt.plot(indices, actions_entropy_norm, marker='o') 
         plt.ylim([0, mean+2*std])
         plt.title('1D Data Plot')
         plt.xlabel('Timestep')
         plt.ylabel('Entropy')
-        plt.grid(True)  # 添加网格线
+        plt.grid(True)  
         os.makedirs(os.path.join(ckpt_dir, "plot"), exist_ok=True)
         plt.savefig(os.path.join(ckpt_dir, f"plot/rollout{rollout_id}_entropy.png"), bbox_inches='tight') 
         actions_entropy_norm = (actions_entropy_norm-mean)/std
@@ -426,51 +426,27 @@ from sklearn.datasets import make_blobs
 
 
 def hdbscan_with_custom_merge(X, dir, rollout_id, plot=True):
-    """
-    使用HDBSCAN进行初步聚类，并根据规则进一步合并：
-    - 第二个特征值小于0的点合并为一个簇；
-    - 其余点合并为另一个簇；
-    - 离群点 (-1 标签) 不参与合并。
-
-    参数:
-    X (array-like): 输入的数据
-    dir (str): 保存图像的目录路径
-    rollout_id (int): 用于标记图像文件名
-    plot (bool): 是否绘制聚类结果
-
-    返回:
-    labels (array): 合并后的簇标签
-    """
-    # 初始化 HDBSCAN
+   
     clusterer = hdbscan.HDBSCAN(min_cluster_size=5)
     clusterer.fit(X)
     
-    # 初步聚类的标签
     initial_labels = clusterer.labels_
 
-    # 将前?个点标记为离群点
     initial_labels[:50] = -1
 
-    # 获取非离群点的唯一标签
-    unique_labels = np.unique(initial_labels[initial_labels >= 0])  # 排除噪声点 (-1)
+    unique_labels = np.unique(initial_labels[initial_labels >= 0]) 
 
-    # 初始化合并后的标签
-    refined_labels = np.full_like(initial_labels, -1)  # 默认所有点为离群值
+    refined_labels = np.full_like(initial_labels, -1) 
 
-    # 合并规则：
-    # - 第二个特征 < 0 的点分为一类（合并到 0 类）
-    # - 其余点分为另一类（合并到 1 类）
     for label in unique_labels:
-        # 获取当前簇的点
+        
         cluster_points = X[initial_labels == label]
         
-        # 判断当前簇的第二个特征的值是否全部小于 0
         if np.mean(cluster_points[:, 1] < 0):
-            refined_labels[initial_labels == label] = 0  # 合并到第 0 类
+            refined_labels[initial_labels == label] = 0  
         else:
-            refined_labels[initial_labels == label] = -1  # 合并到第 1 类
+            refined_labels[initial_labels == label] = -1  
 
-    # 可视化初步聚类结果
     if plot:
         plt.figure(figsize=(8, 6))
         plt.scatter(X[:, 0], X[:, 1], c=initial_labels, cmap='viridis', marker='o')
@@ -482,7 +458,6 @@ def hdbscan_with_custom_merge(X, dir, rollout_id, plot=True):
         plt.savefig(os.path.join(dir, f"plot/rollout{rollout_id}-hdbscan-raw.png"))
         plt.close()
 
-    # 可视化合并后的结果
     if plot:
         plt.figure(figsize=(8, 6))
         scatter = plt.scatter(X[:, 0], X[:, 1], c=refined_labels, cmap='viridis', marker='o')
@@ -497,119 +472,7 @@ def hdbscan_with_custom_merge(X, dir, rollout_id, plot=True):
     return np.abs(refined_labels)
 
 
-def kmeans_clustering(data,dir, rollout_id, max_clusters=10, plot_results=True):
-    """
-    使用 KMeans 对一维或二维数据进行自动分段。
 
-    参数：
-    - data (array-like): 输入数据，可以是一维或二维数组。
-    - max_clusters (int): 最大尝试的簇数量。
-    - plot_results (bool): 是否绘制可视化图表。
-
-    返回：
-    - labels (ndarray): 每个数据点的聚类标签。
-    - optimal_clusters (int): 自动确定的簇数量。
-    """
-    silhouette_scores = []
-    models = []
-
-    # Step 1: 尝试不同的簇数量
-    for k in range(2, max_clusters + 1):
-        kmeans = KMeans(n_clusters=k, random_state=42).fit(data)
-        labels = kmeans.labels_
-        score = silhouette_score(data, labels)
-        silhouette_scores.append(score)
-        models.append((kmeans, labels))
-
-    # Step 2: 找到最佳簇数（Silhouette 分数最大）
-    optimal_clusters = np.argmax(silhouette_scores) + 2  # 索引偏移+2 对应簇数
-    best_model, best_labels = models[optimal_clusters - 2]
-
-    if plot_results:
-        # 绘制 Silhouette 分数随簇数变化
-        plt.figure(figsize=(8, 5))
-        plt.plot(range(2, max_clusters + 1), silhouette_scores, marker="o", label="Silhouette Score")
-        plt.xlabel("Number of Clusters")
-        plt.ylabel("Silhouette Score")
-        plt.title("Silhouette Analysis")
-        plt.grid()
-        plt.axvline(optimal_clusters, color="r", linestyle="--", label="Optimal k")
-        plt.legend()
-        plt.show()
-
-        # 可视化聚类结果（仅支持二维数据）
-        if data.shape[1] == 2:
-            plt.figure(figsize=(8, 5))
-            plt.scatter(data[:, 0], data[:, 1], c=best_labels, cmap="viridis", label="Clusters")
-            plt.xlabel("Feature 1")
-            plt.ylabel("Feature 2")
-            plt.title("KMeans Clustering Result")
-            plt.grid()
-            plt.legend()
-            plt.savefig(
-                os.path.join(dir, f"plot/rollout{rollout_id}-kmeans.png")
-            )
-    return best_labels, optimal_clusters
-
-def spectral_clustering(data, dir, rollout_id,gamma=15, max_eigenvectors=10, plot_results=True):
-    """
-    使用谱聚类对一维或二维数据进行自动分段。
-
-    参数：
-    - data (array-like): 输入数据，可以是一维或二维数组。
-    - gamma (float): 高斯核的参数，控制相似度矩阵的敏感性。
-    - max_eigenvectors (int): 用于计算的最大特征向量数。
-    - plot_results (bool): 是否绘制可视化图表。
-
-    返回：
-    - labels (ndarray): 每个数据点的聚类标签。
-    - optimal_clusters (int): 自动确定的簇数量。
-    """
-    # Step 1: 构建相似度矩阵（高斯核）
-    gamma = 1
-    similarity_matrix = rbf_kernel(data, gamma=gamma)
-
-    # Step 2: 构建拉普拉斯矩阵
-    degree_matrix = np.diag(similarity_matrix.sum(axis=1))
-    laplacian_matrix = degree_matrix - similarity_matrix
-
-    # Step 3: 计算拉普拉斯矩阵的特征值和特征向量
-    eigvals, eigvecs = eigsh(laplacian_matrix, k=max_eigenvectors, which="SM")
-
-    # Step 4: 使用 Eigengap 启发式确定簇数
-    optimal_clusters = 2 #np.argmax(eigengap) + 1
-
-    # Step 5: 聚类
-    selected_eigvecs = eigvecs[:, :optimal_clusters]
-    kmeans = KMeans(n_clusters=optimal_clusters, random_state=42).fit(selected_eigvecs)
-    labels = kmeans.labels_
-
-    if plot_results:
-        # 绘制特征值谱和 Eigengap
-        plt.figure(figsize=(8, 5))
-        plt.plot(range(1, len(eigvals) + 1), eigvals, marker="o", label="Eigenvalues")
-        plt.xlabel("Index")
-        plt.ylabel("Eigenvalue")
-        plt.title("Eigengap Analysis")
-        plt.grid()
-        plt.axvline(optimal_clusters, color="r", linestyle="--", label="Optimal k")
-        plt.legend()
-
-        # 可视化聚类结果（仅支持二维数据）
-        if data.shape[1] == 2:
-            plt.figure(figsize=(8, 5))
-            plt.scatter(data[:, 0], data[:, 1], c=labels, cmap="viridis", label="Clusters")
-            plt.xlabel("Feature 1")
-            plt.ylabel("Feature 2")
-            plt.title("Spectral Clustering Result")
-            plt.grid()
-            plt.legend()
-            plt.savefig(
-                os.path.join(dir, f"plot/rollout{rollout_id}-spectral.png")
-            )
-
-    return labels, optimal_clusters
-    
 def make_policy(policy_class, policy_config):
     if policy_class == "ACT":
         policy = ACTPolicy(policy_config)

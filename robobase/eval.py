@@ -5,7 +5,7 @@ import hydra
 
 @hydra.main(
     config_path="robobase/cfgs", config_name="robobase_config", version_base=None
-)
+) 
 def main(cfg):
     from robobase.workspace import Workspace
 

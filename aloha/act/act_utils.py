@@ -50,14 +50,12 @@ def put_text(img, text, is_waypoint=False, font_size=1, thickness=2, position="t
     return img
 
 def bottom_20_percent_value(lst):
-    # 对列表进行排序
+    
     lst = list(lst)
     sorted_lst = sorted(lst)
     
-    # 计算前80%的位置索引
-    bottom_20_index = int(len(sorted_lst)*0.2) # 1: 80% 0.8 0.5 0.3
+    bottom_20_index = int(len(sorted_lst)*0.2) 
     
-    # 检查元素是否在后20%的范围内
     return sorted_lst[bottom_20_index]
 
 def plot_3d_trajectory(ax, traj_list, actions_var_norm=None, distance=None, label=None, gripper=None, legend=True, add=None):
@@ -65,11 +63,8 @@ def plot_3d_trajectory(ax, traj_list, actions_var_norm=None, distance=None, labe
     mark = None
     if actions_var_norm is not None:
         import math
-        # actions_var_log = [math.log(var+1e-8,1.5) for var in actions_var_norm] # math.log(var+1e-8)
-        # actions_var_log = np.array(actions_var_log)
         actions_var_log = actions_var_norm
         mark = np.array(actions_var_log)
-        # mark = np.exp(mark)/np.sum(np.exp(mark))
         key = bottom_20_percent_value(mark[:220])
     elif distance is not None:
         mark = [d*50 for d in distance]
@@ -175,10 +170,7 @@ def plot_3d_trajectory(ax, traj_list, actions_var_norm=None, distance=None, labe
 
     if legend:
         ax.legend()
-    # ax.w_xaxis.set_pane_color((173/255, 216/255, 230/255, 1.0))
-    # ax.w_yaxis.set_pane_color((173/255, 216/255, 230/255, 1.0))
-    # ax.w_zaxis.set_pane_color((173/255, 216/255, 230/255, 1.0))
-
+    
 
 def process_action_label(action, label, is_pad):
     low_v = 2
