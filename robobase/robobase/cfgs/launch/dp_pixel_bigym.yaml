@@ -1,0 +1,50 @@
+# @package _global_
+
+defaults:
+  - ../env: null
+  - ../method: diffusion
+
+demos: -1
+num_pretrain_steps: 100000
+num_train_frames: 0
+eval_every_steps: 5000
+num_eval_episodes: 50
+batch_size: 256
+save_snapshot: true
+snapshot_every_n: 5000
+replay_size_before_train: 500
+save_ema: true
+load_ema: true
+pixels: true
+frame_stack: 1
+
+is_imitation_learning: true
+
+action_repeat: 1
+action_sequence: 24
+execution_length: ${action_sequence}
+temporal_ensemble: false
+use_standardization: false  # Demo-based standardization for action space
+use_min_max_normalization: true  # Demo-based min-max normalization for action space
+min_max_margin: 0
+norm_obs: true
+
+update_every_steps: 1
+# logging settings
+
+
+seed: 1
+replay:
+  nstep: 1
+
+speedup: false
+
+wandb:  # weight and bias
+  use: true
+  project: dp_bigym
+  name: dp_bigym_${env.task_name}_speedup_${speedup}
+
+
+hydra:
+  run:
+    dir: ./exp_local/pixel_dp/bigym_${env.task_name}_speedup_${speedup}
