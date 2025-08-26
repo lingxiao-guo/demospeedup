@@ -41,7 +41,7 @@ Please replace `[TASK]` with your desired task to train, `[TASK]={ sim_transfer_
 
 ### Train proxy policy
 ```bash
-cd demospeedup/act
+cd demospeedup/act && conda activate aloha
 python act/imitate_episodes.py --task_name [TASK] --ckpt_dir data/outputs/[ALGO]_ckpt/[TASK] --policy_class [ALGO] --kl_weight 10 --chunk_size [Chunk_Size] --hidden_dim 512 --batch_size [Batch_Size] --dim_feedforward 3200 --num_epochs 16000 --lr 1e-5 --seed 0 --temporal_agg 
 ```
 ### Use proxy policy to label demo entropy 
@@ -80,7 +80,7 @@ Use `dp_pixel_bigym` to train Diffusion Policy and `act_pixel_bigym` to train AC
 
 ### Train proxy policy
 ```bash
-cd demospeedup/robobase
+cd demospeedup/robobase && conda activate robobase
 python3 train.py launch=dp_pixel_bigym env=bigym/sandwich_remove
 ```
 
@@ -93,3 +93,6 @@ python3 label.py launch=dp_pixel_bigym env=bigym/sandwich_remove
 ```bash
 python3 train.py launch=dp_pixel_bigym env=bigym/sandwich_remove speedup=True 
 ```
+
+ 
+

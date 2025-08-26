@@ -1,8 +1,6 @@
 # core / from your first list + pinned where available from conda env
-torch==1.12.1
-torchvision==0.13.1
 # use free-mujoco-py (same family) as in the conda pip list
-free-mujoco-py==2.1.6  # provides mujoco-py functionality
+mujoco-py   # provides mujoco-py functionality
 tqdm==4.64.1
 wandb==0.13.3
 ipdb
