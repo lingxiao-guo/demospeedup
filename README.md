@@ -1,4 +1,4 @@
-# [DemoSpeedup⚡: Accelerating Visuomotor Policies via Entropy-Guided Demonstration Acceleration ](https://demospeedup.github.io/)
+# [DemoSpeedup: Accelerating Visuomotor Policies via Entropy-Guided Demonstration Acceleration ](https://demospeedup.github.io/)
 
 **[[Project website](https://demospeedup.github.io/)] [[Paper](https://arxiv.org/html/2506.05064v1)]**
 
