@@ -50,11 +50,11 @@ python act/imitate_episodes.py --task_name [TASK] --ckpt_dir data/outputs/[ALGO]
 ```bash
 python act/imitate_episodes.py --task_name [TASK] --ckpt_dir data/outputs/[ALGO]_ckpt/[TASK] --policy_class [ALGO] --kl_weight 10 --chunk_size [Chunk_Size] --hidden_dim 512 --batch_size [Batch_Size] --dim_feedforward 3200 --num_epochs 16000 --lr 1e-5 --seed 0 --temporal_agg  --label
 ```
-### train policy on accelerated demos
+### Train policy on accelerated demos
 ```bash
 python act/imitate_episodes.py --task_name [TASK] --ckpt_dir data/outputs/[ALGO]_ckpt/[TASK] --policy_class [ALGO] --kl_weight 10 --chunk_size [Chunk_Size] --hidden_dim 512 --batch_size [Batch_Size] --dim_feedforward 3200 --num_epochs 16000 --lr 1e-5 --seed 0 --temporal_agg   --speedup
 ```
-### eval accelerated policy 
+### Eval accelerated policy 
 During evaluation, we recommend to adopt `--temporal_agg` for ACT and discard it for DP.
 ```bash
 python act/imitate_episodes.py --task_name [TASK] --ckpt_dir data/outputs/[ALGO]_ckpt/[TASK] --policy_class [ALGO] --kl_weight 10 --chunk_size [Chunk_Size] --hidden_dim 512 --batch_size [Batch_Size] --dim_feedforward 3200 --num_epochs 16000 --lr 1e-5 --seed 0 --temporal_agg  --speedup --eval
@@ -91,7 +91,7 @@ python3 train.py launch=dp_pixel_bigym env=bigym/sandwich_remove
 python3 label.py launch=dp_pixel_bigym env=bigym/sandwich_remove 
 ```
 
-### train policy on accelerated demos
+### Train policy on accelerated demos
 ```bash
 python3 train.py launch=dp_pixel_bigym env=bigym/sandwich_remove speedup=True 
 ```
