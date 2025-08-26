@@ -1,4 +1,4 @@
-## [DemoSpeedup⚡: Accelerating Visuomotor Policies via Entropy-Guided Demonstration Acceleration ](https://demospeedup.github.io/)
+# [DemoSpeedup⚡: Accelerating Visuomotor Policies via Entropy-Guided Demonstration Acceleration ](https://demospeedup.github.io/)
 [[Project website](https://demospeedup.github.io/)] [[Paper](https://arxiv.org/html/2506.05064v1)]
 
 **CoRL 2025 <span style="color:red">(oral)</span>**
@@ -75,7 +75,7 @@ cd ../demonstrations && pip install -e .
 ```
 
 ### Usage
-Use `dp_pixel_bigym` to train Diffusion Policy and `act_pixel_bigym` to train ACT. See the full list of task names in `robobase/robobase/cfgs/env/bigym`. The evaluation results are saved in  `robobase/exp_local`. For example:
+Use `dp_pixel_bigym` to train Diffusion Policy and `act_pixel_bigym` to train ACT. For example:
 
 ### Train proxy policy
 ```bash
@@ -94,6 +94,7 @@ python3 train.py launch=dp_pixel_bigym env=bigym/sandwich_remove speedup=True
 ```
 
  
+See the full list of task names in `robobase/robobase/cfgs/env/bigym`. The evaluation results are saved in  `robobase/exp_local`.
 
 If you encountered any issue, feel free to contact lingxiag@andrew.cmu.edu.
 
