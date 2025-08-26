@@ -1,5 +1,7 @@
 # [DemoSpeedup⚡: Accelerating Visuomotor Policies via Entropy-Guided Demonstration Acceleration ](https://demospeedup.github.io/)
+
 **[[Project website](https://demospeedup.github.io/)] [[Paper](https://arxiv.org/html/2506.05064v1)]**
+
 [Lingxiao Guo](https://lingxiao-guo.github.io/), [Zhengrong Xue](https://steven-xzr.github.io/), [Zijing Xu](https://demospeedup.github.io/), [Huazhe Xu](http://hxu.rocks/)
 **CoRL 2025 <span style="color:red">(oral)</span>**
 
