@@ -63,7 +63,7 @@ python act/imitate_episodes.py --task_name [TASK] --ckpt_dir data/outputs/[ALGO]
 
 ## Bigym Simulation Suite
 
-## Install
+### Install
 
 System installs:
 
