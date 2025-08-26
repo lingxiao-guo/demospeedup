@@ -1,12 +1,11 @@
-# DemoSpeedup: Accelerating Visuomotor Policies via Entropy-Guided Demonstration Acceleration
+# [DemoSpeedup⚡: Accelerating Visuomotor Policies via Entropy-Guided Demonstration Acceleration ](https://demospeedup.github.io/)
 [[Project website](https://demospeedup.github.io/)] [[Paper](https://arxiv.org/html/2506.05064v1)]
+
+**CoRL 2025 <span style="color:red">(oral)</span>**
 
 ![](media/teaser.png)
 
 This repo contains the official implementation of DemoSpeedup:a self-supervised method to accelerate visuomotor policy execution via entropy-guided demonstration acceleration.  This repo achieves instantiations of combining DemoSpeedup with two popular imitation learning methods, [Diffusion Policy](https://arxiv.org/abs/2303.04137) and [Action Chunking with Transformers (ACT)](https://arxiv.org/abs/2304.13705), and the respective benchmarking environments, [Aloha](https://github.com/lucys0/awe) and [Bigym](https://chernyadev.github.io/bigym/).
-
-
-If you encountered any issue, feel free to contact lingxiag (at) andrew (dot) cmu (dot)edu
 
 
 ## Installation
@@ -17,7 +16,7 @@ cd demospeedup
 ```
 
 2. Install MuJoCo 2.1
-* Download the MuJoCo version 2.1 binaries for [Linux](https://mujoco.org/download/mujoco210-linux-x86_64.tar.gz) or [OSX](https://mujoco.org/download/mujoco210-macos-x86_64.tar.gz).
+* Download the MuJoCo version 2.1 binaries for [Linux](https://mujoco.org/download/mujoco210-linux-x86_64.tar.gz).
 * Extract the downloaded `mujoco210` directory into `~/.mujoco/mujoco210`.
 
 3. Refer to  **Aloha Simulation Suite** and **Bigym Simulation Suite** to set up each corresponding environment.
@@ -95,4 +94,6 @@ python3 train.py launch=dp_pixel_bigym env=bigym/sandwich_remove speedup=True
 ```
 
  
+
+If you encountered any issue, feel free to contact lingxiag@andrew.cmu.edu.
 
