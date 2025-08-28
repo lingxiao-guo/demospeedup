@@ -15,7 +15,7 @@ This repo contains the official implementation of DemoSpeedup:a self-supervised 
 1. Clone this repository
 ```bash
 git clone git@github.com:lingxiao-guo/DemoSpeedup.git
-cd demospeedup
+cd DemoSpeedup
 ```
 
 2. Install MuJoCo 2.1
@@ -43,7 +43,7 @@ Please replace `[TASK]` with your desired task to train, `[TASK]={ sim_transfer_
 
 ### Train proxy policy
 ```bash
-cd demospeedup/act && conda activate aloha
+cd DemoSpeedup/act && conda activate aloha
 python act/imitate_episodes.py --task_name [TASK] --ckpt_dir data/outputs/[ALGO]_ckpt/[TASK] --policy_class [ALGO] --kl_weight 10 --chunk_size [Chunk_Size] --hidden_dim 512 --batch_size [Batch_Size] --dim_feedforward 3200 --num_epochs 16000 --lr 1e-5 --seed 0 --temporal_agg 
 ```
 ### Use proxy policy to label demo entropy 
@@ -82,7 +82,7 @@ Use `dp_pixel_bigym` to train Diffusion Policy and `act_pixel_bigym` to train AC
 
 ### Train proxy policy
 ```bash
-cd demospeedup/robobase && conda activate robobase
+cd DemoSpeedup/robobase && conda activate robobase
 python3 train.py launch=dp_pixel_bigym env=bigym/sandwich_remove
 ```
 
