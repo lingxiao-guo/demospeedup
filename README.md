@@ -28,7 +28,7 @@ cd DemoSpeedup
 ## Aloha Simulation Suite
 ### Set up the environment
 ```bash
-conda env update -f act/conda_env.yaml
+conda env update -f aloha/act/conda_env.yaml
 cd aloha && pip install -r requirements.txt 
 ```
 
