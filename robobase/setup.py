@@ -37,6 +37,7 @@ core_requirements = [
     "timm",
     "scipy",
     "einops",
+    "matplotlib",
     "diffusers==0.29.0",
 ]
 

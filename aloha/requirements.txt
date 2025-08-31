@@ -1,29 +1,37 @@
 # core / from your first list + pinned where available from conda env
+pyquaternion==0.9.9
+pyyaml==6.0
+pexpect==4.8.0
+mujoco==2.3.3
+dm_control==1.0.9
+opencv-python>=4.7.0,<4.8
+matplotlib==3.7.1
+einops==0.6.0
+packaging==23.0
+h5py==3.8.0
+ipython==8.12.0
+
 # use free-mujoco-py (same family) as in the conda pip list
 mujoco-py   # provides mujoco-py functionality
 tqdm==4.64.1
 wandb==0.13.3
 ipdb
 numpy==1.23.3
-numba==0.56.4
+numba==0.53.1
 scipy==1.9.1
-matplotlib==3.6.1
 moviepy
 imageio==2.22.0
-opencv-python==4.6.0
 
 # other pip-installable deps from the conda env (versions taken from env where present)
 cffi==1.15.1
 ipykernel==6.16
 zarr==2.12.0
 numcodecs==0.10.2
-h5py==3.7.0
 hydra-core==1.2.0
-einops==0.4.1
 dill==0.3.5.1
 scikit-video==1.1.11
 scikit-image==0.19.3
-gym==0.21.0
+gym==0.26.2
 pymunk==6.2.1
 wandb==0.13.3
 threadpoolctl==3.1.0
@@ -49,7 +57,10 @@ pytorchvideo==0.1.5
 r3m @ https://github.com/facebookresearch/r3m/archive/b2334e726887fa0206962d7984c69c5fb09cceab.tar.gz
 robosuite @ https://github.com/cheng-chi/robosuite/archive/277ab9588ad7a4f4b55cf75508b44aa67ec171f0.tar.gz
 dm-control==1.0.9
-
+huggingface_hub==0.16.4
+scikit-learn
+hdbscan
+modern_robotics
 # notes / optional (may require conda or special wheels)
 # pytorch3d==0.7.0  # often easier to install via conda/pytorch channel with matching CUDA
 # cmake==3.24.3     # can be installed via pip but typically installed via system/conda

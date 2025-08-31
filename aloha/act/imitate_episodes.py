@@ -1,6 +1,8 @@
 import torch
 import numpy as np
 import os
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import pickle
 import math
 import h5py
@@ -326,61 +328,15 @@ def label_entropy(config, ckpt_name, save_demos=False,save_episode=True):
         actions_entropy_norm = traj_action_entropy
 
         qpos = all_qpos  # ts, dim
-        from act.convert_ee import get_xyz
-
-        left_arm_xyz = get_xyz(qpos[:, :6])
-        right_arm_xyz = get_xyz(qpos[:, 7:13])
-        # Find global min and max for each axis
-        all_data = np.concatenate([left_arm_xyz, right_arm_xyz], axis=0)
-        min_x, min_y, min_z = np.min(all_data, axis=0)
-        max_x, max_y, max_z = np.max(all_data, axis=0)
-
-        fig = plt.figure(figsize=(20, 10))
-        ax1 = fig.add_subplot(121, projection="3d") 
-        ax1.set_xlabel("x")
-        ax1.set_ylabel("y")
-        ax1.set_zlabel("z")
-        ax1.set_title("Left", fontsize=20)
-        ax1.set_xlim([min_x, max_x])
-        ax1.set_ylim([min_y, max_y])
-        ax1.set_zlim([min_z, max_z])
         
-        plot_3d_trajectory(ax1, left_arm_xyz, actions_entropy_norm,label="policy rollout", legend=False)
-
-        ax2 = fig.add_subplot(122, projection="3d")
-        ax2.set_xlabel("x")
-        ax2.set_ylabel("y")
-        ax2.set_zlabel("z")
-        ax2.set_title("Right", fontsize=20)
-        ax2.set_xlim([min_x, max_x])
-        ax2.set_ylim([min_y, max_y])
-        ax2.set_zlim([min_z, max_z])
-
-        plot_3d_trajectory(ax2, right_arm_xyz, actions_entropy_norm,label="policy rollout", legend=False)
-        fig.suptitle(f"Task: {task_name}", fontsize=30) 
-
-        handles, labels = ax1.get_legend_handles_labels()
-        fig.legend(handles, labels, loc="lower center", ncol=2, fontsize=20)
-                
-        # Only save successful video/plot
-        if save_episode : #and episode_highest_reward==env_max_reward: 
+        if save_episode : 
             save_videos(
                 image_list,
                 DT,
                 video_path=os.path.join(ckpt_dir, f"label/rollout{rollout_id}.mp4"),
             )
-            # fig.savefig(
-            #     os.path.join(ckpt_dir, f"plot/rollout{rollout_id}.png")
-            # )
-            # ax1.view_init(elev=90, azim=45)
-            # ax2.view_init(elev=90, azim=45)
-            # fig.savefig(
-            #     os.path.join(ckpt_dir, f"plot/rollout{rollout_id}_demos{save_id}_view.png")
-            # )
             
-        plt.close(fig)
         save_labels = True
-        # actions_entropy_norm = np.abs(np.diff(actions_entropy_norm))
         indices = np.arange(len(actions_entropy_norm))
         std = np.std(actions_entropy_norm)
         mean = np.mean(actions_entropy_norm)

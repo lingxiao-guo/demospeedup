@@ -40,8 +40,10 @@ def make_sim_env(task_name, speedup=False):
     """
     if "sim_transfer_cube" in task_name:
         if not speedup:
+            print("Using normal gain gripper")
             xml_path = os.path.join(XML_DIR, f"bimanual_viperx_transfer_cube.xml")
         else:
+            print("Using high gain gripper")
             xml_path = os.path.join(XML_DIR, f"bimanual_viperx_transfer_cube_high_gain.xml")
         physics = mujoco.Physics.from_xml_path(xml_path)
         task = TransferCubeTask(random=False)

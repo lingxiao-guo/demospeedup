@@ -28,12 +28,14 @@ cd DemoSpeedup
 ## Aloha Simulation Suite
 ### Set up the environment
 ```bash
-conda env update -f aloha/act/conda_env.yaml
+conda create -n aloha python=3.9
+conda activate aloha
+pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
 cd aloha && pip install -r requirements.txt 
 ```
 
 ### Download data
-Please download scripted/human demo for simulated environments from [here](https://drive.google.com/drive/folders/1gPR03v05S1xiInoVJn7G7VJ9pDCnxq9O) and save them in `data/`.
+Please download scripted/human demo for simulated environments from [here](https://drive.google.com/drive/folders/1gPR03v05S1xiInoVJn7G7VJ9pDCnxq9O) and save them in `aloha/data/`.
 
 
 
@@ -43,7 +45,7 @@ Please replace `[TASK]` with your desired task to train, `[TASK]={ sim_transfer_
 
 ### Train proxy policy
 ```bash
-cd DemoSpeedup/act && conda activate aloha
+cd DemoSpeedup/aloha && conda activate aloha
 python act/imitate_episodes.py --task_name [TASK] --ckpt_dir data/outputs/[ALGO]_ckpt/[TASK] --policy_class [ALGO] --kl_weight 10 --chunk_size [Chunk_Size] --hidden_dim 512 --batch_size [Batch_Size] --dim_feedforward 3200 --num_epochs 16000 --lr 1e-5 --seed 0 --temporal_agg 
 ```
 ### Use proxy policy to label demo entropy 
@@ -52,12 +54,12 @@ python act/imitate_episodes.py --task_name [TASK] --ckpt_dir data/outputs/[ALGO]
 ```
 ### Train policy on accelerated demos
 ```bash
-python act/imitate_episodes.py --task_name [TASK] --ckpt_dir data/outputs/[ALGO]_ckpt/[TASK] --policy_class [ALGO] --kl_weight 10 --chunk_size [Chunk_Size] --hidden_dim 512 --batch_size [Batch_Size] --dim_feedforward 3200 --num_epochs 16000 --lr 1e-5 --seed 0 --temporal_agg   --speedup
+python act/imitate_episodes.py --task_name [TASK] --ckpt_dir data/outputs/[ALGO]_speedup_ckpt/[TASK] --policy_class [ALGO] --kl_weight 10 --chunk_size [Chunk_Size] --hidden_dim 512 --batch_size [Batch_Size] --dim_feedforward 3200 --num_epochs 16000 --lr 1e-5 --seed 0 --temporal_agg   --speedup
 ```
 ### Eval accelerated policy 
 During evaluation, we recommend to adopt `--temporal_agg` for ACT and discard it for DP.
 ```bash
-python act/imitate_episodes.py --task_name [TASK] --ckpt_dir data/outputs/[ALGO]_ckpt/[TASK] --policy_class [ALGO] --kl_weight 10 --chunk_size [Chunk_Size] --hidden_dim 512 --batch_size [Batch_Size] --dim_feedforward 3200 --num_epochs 16000 --lr 1e-5 --seed 0 --temporal_agg  --speedup --eval
+python act/imitate_episodes.py --task_name [TASK] --ckpt_dir data/outputs/[ALGO]_speedup_ckpt/[TASK] --policy_class [ALGO] --kl_weight 10 --chunk_size [Chunk_Size] --hidden_dim 512 --batch_size [Batch_Size] --dim_feedforward 3200 --num_epochs 16000 --lr 1e-5 --seed 0 --temporal_agg  --speedup --eval
 ```
 
 
@@ -72,6 +74,9 @@ sudo apt-get install ffmpeg  # Usually pre-installed on most systems
 ```
 
 ```bash
+conda create -n robobase python=3.10
+conda activate robobase
+pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
 cd robobase && pip install .
 cd third_party/bigym && pip install -e .
 cd ../demonstrations && pip install -e .
