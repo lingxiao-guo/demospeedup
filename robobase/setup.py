@@ -38,6 +38,7 @@ core_requirements = [
     "scipy",
     "einops",
     "matplotlib",
+    "hdbscan",
     "diffusers==0.29.0",
 ]
 

@@ -78,8 +78,8 @@ conda create -n robobase python=3.10
 conda activate robobase
 pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
 cd robobase && pip install .
-cd third_party/bigym && pip install -e .
-cd ../demonstrations && pip install -e .
+cd third_party/bigym && pip install .
+cd ../demonstrations && pip install .
 ```
 
 ### Usage
