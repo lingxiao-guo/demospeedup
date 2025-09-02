@@ -90,7 +90,6 @@ Use `dp_pixel_bigym` to train Diffusion Policy and `act_pixel_bigym` to train AC
 cd DemoSpeedup/robobase && conda activate robobase
 python3 train.py launch=dp_pixel_bigym env=bigym/sandwich_remove
 ```
-
 ### Use proxy policy to label demo entropy 
 ```bash
 python3 label.py launch=dp_pixel_bigym env=bigym/sandwich_remove 
