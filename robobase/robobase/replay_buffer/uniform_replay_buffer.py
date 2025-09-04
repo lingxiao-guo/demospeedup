@@ -66,7 +66,7 @@ def load_episode(fn: Path):
 
 def downsample_action_with_labels(action, label, chunk_len):
     low_v = 2
-    high_v = 2
+    high_v = 4
     horizon, dim = action.shape
     current_action = action
     current_label = label
