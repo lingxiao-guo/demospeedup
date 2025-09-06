@@ -53,6 +53,7 @@ python act/imitate_episodes.py --task_name [TASK] --ckpt_dir data/outputs/[ALGO]
 python act/imitate_episodes.py --task_name [TASK] --ckpt_dir data/outputs/[ALGO]_ckpt/[TASK] --policy_class [ALGO] --kl_weight 10 --chunk_size [Chunk_Size] --hidden_dim 512 --batch_size [Batch_Size] --dim_feedforward 3200 --num_epochs 16000 --lr 1e-5 --seed 0 --temporal_agg  --label
 ```
 ### Train policy on accelerated demos
+We recommend `[Chunk_Size]=25` for ACT and `[Chunk_Size]=24` for DP to maintain geometrical consistency:
 ```bash
 python act/imitate_episodes.py --task_name [TASK] --ckpt_dir data/outputs/[ALGO]_speedup_ckpt/[TASK] --policy_class [ALGO] --kl_weight 10 --chunk_size [Chunk_Size] --hidden_dim 512 --batch_size [Batch_Size] --dim_feedforward 3200 --num_epochs 16000 --lr 1e-5 --seed 0 --temporal_agg   --speedup
 ```
